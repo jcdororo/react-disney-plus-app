@@ -21,7 +21,7 @@ const Nav = () => {
   
 
   return (
-    <NavWrapper show={{show}}>
+    <NavWrapper show={show.toString()}>
       <Logo>
         <img 
           alt='Disney Plus Logo'
@@ -48,15 +48,15 @@ const NavWrapper = styled.nav`
   padding: 0 36px;
   letter-spacing: 16px;
   z-index: 3;
-`
+`;
 
 const Logo = styled.a`
-  padding: 0;
+  padding:0;
   width: 80px;
   margin-top: 4px;
   max-height: 70px;
   font-size: 0;
-  display: inline-block;
+  diplay: inline-block;
 
   img {
     display: block;
