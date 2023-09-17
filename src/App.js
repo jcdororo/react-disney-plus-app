@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import './App.css';
 import Banner from './components/Banner';
+import Category from './components/Category';
 import Nav from './components/Nav';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <Container>
       <Nav />
       <Banner />
+      <Category />
     </Container>
   );
 }
