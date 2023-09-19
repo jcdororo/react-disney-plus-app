@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components'
@@ -12,7 +12,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const provide = new GoogleAuthProvider();
-  const [userData, setuserData] = useState({});
+  const [userData, setUserData] = useState({});
 
 
   useEffect(() => {
@@ -60,13 +60,23 @@ const Nav = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provide)
     .then(result => {
-      setuserData(result.user);
+      setUserData(result.user);
     })
     .catch(error => {
       console.log(error);
     })
   }
   
+  const handleSignOut = () => {
+    signOut(auth).then(()=>{
+      setUserData({});
+      navigate(`/`);
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
   return (
     <NavWrapper show={show.toString()}>
       <Logo>
@@ -90,7 +100,7 @@ const Nav = () => {
       <SignOut>
         <UserImg src={userData.photoURL} alt={userData.displayName} />
         <DropDown>
-          <span>Sign Out</span>
+          <span onClick={handleSignOut}> Sign Out</span>
         </DropDown>
       </SignOut>
       
@@ -102,11 +112,45 @@ const Nav = () => {
 
 export default Nav
 
-const SignOut = styled.div``;
+const DropDown = styled.div`
+  position: absolute;
+  top: 48px;
+  right: 0px;
+  background: rgb(19, 19, 19);
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius:  4px;
+  box-shadow: rgb(0 0 0 /50%) 0px 0px 18px 0px;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  width: 100%;
+  opacity: 0;
+`;
 
-const UserImg = styled.div``;
+const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
 
-const DropDown = styled.div``;
+  &:hover {
+    ${DropDown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
+`;
+
+const UserImg = styled.img`
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  
+`;
+
 
 const Login = styled.a`
   background-color: rgba(0,0,0,0.6);
