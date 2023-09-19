@@ -14,6 +14,7 @@ const LoginPage = () => {
           </Description>
           <LogoTwo src='images/cta-logo-two.png' alt='logo-two'/>
         </Center>
+        <BgImage />
       </Content>
     </Container>
   )
@@ -21,6 +22,18 @@ const LoginPage = () => {
 
 export default LoginPage
 
+const BgImage = styled.div`
+  height: 100%;
+  background-position: top;
+  background-image: url("/images/login-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+`;
 
 const Container = styled.section`
    overflow: hidden;
