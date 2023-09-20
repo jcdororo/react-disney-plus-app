@@ -6,29 +6,34 @@ import { styled } from 'styled-components'
 
 const Nav = () => {  
 
+  const initialUserData = localStorage.getItem('userData') ?
+    JSON.parse(localStorage.getItem('userData')) : {};
+
+  
+
+
   const [show, setShow] = useState(false);
   const { pathname } = useLocation();
   const [searchValue, setsearchValue] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
-  const provide = new GoogleAuthProvider();
-  const [userData, setUserData] = useState({});
+  const provider = new GoogleAuthProvider();
+  const [userData, setUserData] = useState({initialUserData});
+
+  
 
 
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
-      console.log('user: ' + user)
-      if(user){
-        if(pathname === "/") {
-          navigate("/main")
+      if (user) {
+        if (pathname === "/") {
+          navigate("/main");
         }
       } else {
-        navigate("/")
+        navigate("/");
       }
     })
-
-  }, [])
+  }, [auth, navigate, pathname])
   
 
 
@@ -58,13 +63,15 @@ const Nav = () => {
   }
 
   const handleAuth = () => {
-    signInWithPopup(auth, provide)
-    .then(result => {
-      setUserData(result.user);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    signInWithPopup(auth, provider)
+      .then(result => {
+        setUserData(result.user);
+        localStorage.setItem("userData", JSON.stringify(result.user));
+        // console.log(userData.photoURL);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
   
   const handleSignOut = () => {
@@ -148,7 +155,6 @@ const UserImg = styled.img`
   border-radius: 50%;
   width: 100%;
   height: 100%;
-  
 `;
 
 
