@@ -7,7 +7,7 @@ import { styled } from 'styled-components'
 const Nav = () => {  
 
   const initialUserData = localStorage.getItem('userData') ?
-    JSON.parse(localStorage.getItem('userData')) : {};
+              JSON.parse(localStorage.getItem('userData')) : {};
 
   
 
@@ -18,7 +18,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  const [userData, setUserData] = useState({initialUserData});
+  const [userData, setUserData] = useState(initialUserData);
 
   
 
@@ -66,8 +66,10 @@ const Nav = () => {
     signInWithPopup(auth, provider)
       .then(result => {
         setUserData(result.user);
-        localStorage.setItem("userData", JSON.stringify(result.user));
+        // localStorage.setItem("userData", JSON.stringify(result.user));
+        // console.log(userData)
         // console.log(userData.photoURL);
+        // console.log(userData.initialUserData.photoURL)
       })
       .catch(error => {
         console.log(error);
