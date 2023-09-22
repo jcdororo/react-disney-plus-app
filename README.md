@@ -4,6 +4,6 @@ https://react-disney-plus-app-d2821.web.app/
 
 
 ## Firebase 배포 방법
-$ npm run build   
-$ firebase deploy
+` $ npm run build   `   
+` $ firebase deploy `
 
